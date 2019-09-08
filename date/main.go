@@ -100,7 +100,7 @@ func last(s time.Weekday) time.Time {
 	if diff < 0 {
 		return t.AddDate(0, 0, diff)
 	}
-
+	
 	return t.AddDate(0, 0, -(7 - diff))
 }
 
