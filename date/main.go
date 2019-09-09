@@ -9,17 +9,13 @@ func main() {
 	fmt.Println("Welcome from deego/date")
 }
 
-// now returns the current datetime
+var Now = time.Now
+
+// now returns the current system datetime, mainly used for the other datetime functions.
 func now() time.Time {
-	t := time.Now()
-	return t
-	// 2019-09-08 00:00:00.619429 -0400 EDT
+	return time.Now()
 }
 
-// today returns the current days datetime with 00:00.
-func today() {
-
-}
 
 // tomorrow retuns the datetime of the next day from the datetime given
 func tomorrow(t time.Time) time.Time {
@@ -83,7 +79,7 @@ func getMonthShort(s string) string {
 
 // last returns the datetime from the last day that was given, for example last Thursday
 func last(s time.Weekday) time.Time {
-	t := time.Now()
+	t := now()
 
 	// Converts day of week to its int form
 	// Sunday = 0, Saturday = 6
@@ -106,7 +102,7 @@ func last(s time.Weekday) time.Time {
 
 // next returns the dt of the next given day, for example next Thursday
 func next(s time.Weekday) time.Time {
-	t := time.Now()
+	t := now()
 
 	// Converts day of week to its int form
 	// Sunday = 0, Saturday = 6
