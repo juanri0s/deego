@@ -1,6 +1,7 @@
 package date
 
 import (
+	"math/rand"
 	"time"
 )
 
@@ -9,6 +10,16 @@ func sampleTime() time.Time {
 	layout := "2006-01-02"
 	t, _ := time.Parse(layout, s)
 	return t
+}
+
+// randomDate generates a random date
+func randomDate() time.Time {
+	min := time.Date(1990, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
+	max := time.Date(2030, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
+	delta := max - min
+
+	sec := rand.Int63n(delta) + min
+	return time.Unix(sec, 0)
 }
 
 // now returns the current datetime
@@ -49,7 +60,6 @@ func isWeekend(t time.Time) bool {
 
 // isWeekday returns true if a given datetime lands on a weekday, false when it doesn't.
 func isWeekday(t time.Time) bool {
-
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return false
 	}
