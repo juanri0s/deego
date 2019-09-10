@@ -30,6 +30,15 @@ func now() time.Time {
 	// 2019-09-08 00:00:00.619429 -0400 EDT
 }
 
+// today returns the current day rounded down to the start of the day
+func today(t time.Time) time.Time {
+	// only assign the day, month, year to achieve the time being 00:00:00
+	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	return rounded
+	// t -> 2019-09-10 23:00:00 +0000 UTC
+	// rounded -> 2019-09-10 00:00:00 +0000 UTC
+}
+
 // tomorrow returns the datetime of the next day from the datetime given
 func tomorrow(t time.Time) time.Time {
 	// add 1 int day
@@ -128,7 +137,6 @@ func next(wd time.Weekday) time.Time {
 	return t.AddDate(0, 0, 7+(diff))
 }
 
-
 // utc accepts a date string and a timezone and converts the time to utc
 // utc is not possible without an initial tz
 func utc(s string, tz string) time.Time {
@@ -141,8 +149,43 @@ func utc(s string, tz string) time.Time {
 	return t.UTC()
 }
 
+// equal accepts two date strings and checks if they are equal
+// to check if two go times are equal the if condition is all that's needed
+func equal(s1 string, s2 string) bool {
+	layout := "2006-01-02"
+	t1, _ := time.Parse(layout, s1)
+	t2, _ := time.Parse(layout, s2)
+
+	if t1 == t2 {
+		return true
+	}
+
+	return false
+}
+
+// compare accepts two strings and returns the comparison based on the first parameter
+// 1 = greater, -1 = less than, 0 = equal
+// to get the diff between two go times, the if logic is all that's needed
+func compare(s1 string, s2 string) int {
+	layout := "2006-01-02"
+	t1, _ := time.Parse(layout, s1)
+	t2, _ := time.Parse(layout, s2)
+
+	if t1.After(t2) {
+		return 1
+	}
+
+	if t1.Before(t2) {
+		return -1
+	}
+
+	// can also be checked with ==
+	// but since it's the last condition we just return it
+	return 0
+}
 
 // diff accepts two strings and returns the difference in days
+// to get the diff between two go times, the sub and if conditions is all that's needed
 func diff(s1 string, s2 string) float64 {
 	layout := "2006-01-02"
 	t1, _ := time.Parse(layout, s1)
@@ -156,4 +199,3 @@ func diff(s1 string, s2 string) float64 {
 
 	return diff.Hours()
 }
-
