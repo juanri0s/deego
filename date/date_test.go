@@ -98,7 +98,7 @@ func Test_next(t *testing.T) {
 	}
 }
 
-func Test_getMonthShort(t *testing.T) {
+func Test_MonthShort(t *testing.T) {
 
 	type args struct {
 		t time.Time
@@ -138,13 +138,13 @@ func Test_getMonthShort(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
-			actual := getMonthShort(tt.args.t)
+			actual := monthShort(tt.args.t)
 			assert.Equal(t, actual, want, "months did not match")
 		})
 	}
 }
 
-func Test_getMonthLong(t *testing.T) {
+func Test_MonthLong(t *testing.T) {
 	type args struct {
 		t time.Time
 	}
@@ -183,7 +183,7 @@ func Test_getMonthLong(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
-			actual := getMonthLong(tt.args.t)
+			actual := monthLong(tt.args.t)
 			assert.Equal(t, actual, want, "months did not match")
 		})
 	}

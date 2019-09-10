@@ -68,8 +68,8 @@ func isWeekday(t time.Time) bool {
 	return true
 }
 
-// getMonthLong returns the full month of a given datetime
-func getMonthLong(t time.Time) string {
+// monthLong returns the full month of a given datetime
+func monthLong(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()
 
@@ -77,7 +77,7 @@ func getMonthLong(t time.Time) string {
 }
 
 // getMonthShort returns the abbreviated month of a given datetime
-func getMonthShort(t time.Time) string {
+func monthShort(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()[:3]
 
