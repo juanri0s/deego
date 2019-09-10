@@ -188,7 +188,7 @@ func utc(s string, tz string) time.Time {
 
 // equal accepts two date strings and checks if they are equal
 func equal(t1 time.Time, t2 time.Time) bool {
-	if t1 == t2 {
+	if t1.Equal(t2) {
 		return true
 	}
 
@@ -258,7 +258,6 @@ func daysInYear(s string) float64 {
 	// we need to add 1 day to account for the last day
 	t2 := endOfYear(s).AddDate(0, 0, 1)
 	// get number of days between the first day and last day of the year
-	// since diff subtracts, we need to pass the larger date first
 	days := diff(t2, t1)
 
 	return days
