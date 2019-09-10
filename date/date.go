@@ -245,12 +245,14 @@ func epochSec(t time.Time) int64 {
 }
 
 // epochNano accepts a time and returns the number of elapsed nanoseconds from unix epoch
+// https://play.golang.org/p/H4t7b3KeW8t
 func epochNano(t time.Time) int64 {
 	nanos := t.UnixNano()
 	return nanos
 }
 
 // epochMilli accepts a time and returns the number of elapsed milliseconds from unix epoch
+// https://play.golang.org/p/6g_v4v4XvTu
 func epochMilli(t time.Time) int64 {
 	nanos := t.UnixNano()
 	// go does not have UnixMillis, so we have to divide manually from nanos
@@ -260,6 +262,7 @@ func epochMilli(t time.Time) int64 {
 }
 
 // daysInYear returns the number of days in a year including leap years
+// https://play.golang.org/p/WBacxQ5q7zC
 func daysInYear(s string) float64 {
 	// gives us the first day of the year
 	t1 := startOfYear(s)
@@ -273,6 +276,7 @@ func daysInYear(s string) float64 {
 }
 
 // startOfYear accepts a year string and returns the start of that given year
+// https://play.golang.org/p/ZqlMo8nXSas
 func startOfYear(s string) time.Time {
 	// convert year string to int
 	y, _ := strconv.Atoi(s)
@@ -281,6 +285,7 @@ func startOfYear(s string) time.Time {
 }
 
 // endOfYear accepts a year string and returns the end of that given year
+// https://play.golang.org/p/VOK_B3uezGt
 func endOfYear(s string) time.Time {
 	// convert year string to int
 	y, _ := strconv.Atoi(s)
@@ -292,6 +297,7 @@ func endOfYear(s string) time.Time {
 // Courtesy of Sam Rose's post on dev.to
 // https://dev.to/samwho/get-the-number-of-days-between-two-dates-in-go-5bf3
 // daysBetween returns the number of days in between two dt
+// https://play.golang.org/p/1bIGdQk25mR
 func daysBetween(t1, t2 time.Time) int {
 	if t1.After(t2) {
 		t1, t2 = t2, t1
