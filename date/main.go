@@ -19,8 +19,7 @@ func now() time.Time {
 }
 
 // tomorrow retuns the datetime of the next day from the datetime given
-func tomorrow() time.Time {
-	t := sampleTime()
+func tomorrow(t time.Time) time.Time {
 	// add 1 int day
 	// years, months, days
 	tomorrow := t.AddDate(0, 0, 1)
@@ -30,8 +29,7 @@ func tomorrow() time.Time {
 }
 
 // nextWeek returns the datetime of one week from the datetime given
-func nextWeek() time.Time {
-	t := sampleTime()
+func nextWeek(t time.Time) time.Time {
 	// years, months, days
 	// 7 days * the number of weeks we want to add
 	nextWeek := t.AddDate(0, 0, 1)
@@ -41,8 +39,7 @@ func nextWeek() time.Time {
 }
 
 // isWeekend returns true if a given datetime lands on a weekend, false when it doesn't.
-func isWeekend() bool {
-	t := sampleTime()
+func isWeekend(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return true
 	}
@@ -51,8 +48,7 @@ func isWeekend() bool {
 }
 
 // isWeekday returns true if a given datetime lands on a weekday, false when it doesn't.
-func isWeekday() bool {
-	t := sampleTime()
+func isWeekday(t time.Time) bool {
 	if (t.Weekday().String() != "Saturday") || (t.Weekday().String() != "Sunday") {
 		return true
 	}
@@ -61,8 +57,7 @@ func isWeekday() bool {
 }
 
 // getMonthLong returns the full month of a given datetime
-func getMonthLong() string {
-	t := sampleTime()
+func getMonthLong(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()
 
@@ -70,8 +65,7 @@ func getMonthLong() string {
 }
 
 // getMonthShort returns the abbreviated month of a given datetime
-func getMonthShort() string {
-	t := sampleTime()
+func getMonthShort(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()[:3]
 
