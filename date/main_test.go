@@ -98,3 +98,215 @@ func Test_next(t *testing.T) {
 		})
 	}
 }
+
+func Test_getMonthShort(t *testing.T) {
+
+	type args struct {
+		t time.Time
+	}
+
+	jan := args{sampleTime()}
+	feb := args{sampleTime().AddDate(0, 1, 0)}
+	mar := args{sampleTime().AddDate(0, 2, 0)}
+	apr := args{sampleTime().AddDate(0, 3, 0)}
+	may := args{sampleTime().AddDate(0, 4, 0)}
+	jun := args{sampleTime().AddDate(0, 5, 0)}
+	jul := args{sampleTime().AddDate(0, 6, 0)}
+	aug := args{sampleTime().AddDate(0, 7, 0)}
+	sep := args{sampleTime().AddDate(0, 8, 0)}
+	oct := args{sampleTime().AddDate(0, 9, 0)}
+	nov := args{sampleTime().AddDate(0, 10, 0)}
+	dec := args{sampleTime().AddDate(0, 11, 0)}
+
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{"January", jan, "Jan"},
+		{"February", feb, "Feb"},
+		{"March", mar, "Mar"},
+		{"April", apr, "Apr"},
+		{"May", may, "May"},
+		{"June", jun, "Jun"},
+		{"July", jul, "Jul"},
+		{"August", aug, "Aug"},
+		{"September", sep, "Sep"},
+		{"October", oct, "Oct"},
+		{"November", nov, "Nov"},
+		{"December", dec, "Dec"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			want := tt.want
+			actual := getMonthShort(tt.args.t)
+			assert.Equal(t, actual, want, "months did not match")
+		})
+	}
+}
+
+func Test_getMonthLong(t *testing.T) {
+	type args struct {
+		t time.Time
+	}
+
+	jan := args{sampleTime()}
+	feb := args{sampleTime().AddDate(0, 1, 0)}
+	mar := args{sampleTime().AddDate(0, 2, 0)}
+	apr := args{sampleTime().AddDate(0, 3, 0)}
+	may := args{sampleTime().AddDate(0, 4, 0)}
+	jun := args{sampleTime().AddDate(0, 5, 0)}
+	jul := args{sampleTime().AddDate(0, 6, 0)}
+	aug := args{sampleTime().AddDate(0, 7, 0)}
+	sep := args{sampleTime().AddDate(0, 8, 0)}
+	oct := args{sampleTime().AddDate(0, 9, 0)}
+	nov := args{sampleTime().AddDate(0, 10, 0)}
+	dec := args{sampleTime().AddDate(0, 11, 0)}
+
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{"January", jan, "January"},
+		{"February", feb, "February"},
+		{"March", mar, "March"},
+		{"April", apr, "April"},
+		{"May", may, "May"},
+		{"June", jun, "June"},
+		{"July", jul, "July"},
+		{"August", aug, "August"},
+		{"September", sep, "September"},
+		{"October", oct, "October"},
+		{"November", nov, "November"},
+		{"December", dec, "December"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			want := tt.want
+			actual := getMonthLong(tt.args.t)
+			assert.Equal(t, actual, want, "months did not match")
+		})
+	}
+}
+
+func Test_isWeekday(t *testing.T) {
+	type args struct {
+		t time.Time
+	}
+
+	st := sampleTime()
+
+	ttSun := args{st.AddDate(0, 0, 5)}
+	ttMon := args{st.AddDate(0, 0, 6)}
+	ttTues := args{st.AddDate(0, 0, 7)}
+	ttWed := args{st.AddDate(0, 0, 1)}
+	ttThurs := args{st.AddDate(0, 0, 2)}
+	ttFri := args{st.AddDate(0, 0, 3)}
+	ttSat := args{st.AddDate(0, 0, 4)}
+
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Sunday", ttSun, false},
+		{"Monday", ttMon, true},
+		{"Tuesday", ttTues, true},
+		{"Wednesday", ttWed, true},
+		{"Thursday", ttThurs, true},
+		{"Friday", ttFri, true},
+		{"Saturday", ttSat, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			want := tt.want
+			actual := isWeekday(tt.args.t)
+			assert.Equal(t, actual, want, "expected day failed weekday check")
+		})
+	}
+}
+
+func Test_isWeekend(t *testing.T) {
+	type args struct {
+		t time.Time
+	}
+
+	st := sampleTime()
+
+	ttSun := args{st.AddDate(0, 0, 5)}
+	ttMon := args{st.AddDate(0, 0, 6)}
+	ttTues := args{st.AddDate(0, 0, 7)}
+	ttWed := args{st.AddDate(0, 0, 1)}
+	ttThurs := args{st.AddDate(0, 0, 2)}
+	ttFri := args{st.AddDate(0, 0, 3)}
+	ttSat := args{st.AddDate(0, 0, 4)}
+
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Sunday", ttSun, true},
+		{"Monday", ttMon, false},
+		{"Tuesday", ttTues, false},
+		{"Wednesday", ttWed, false},
+		{"Thursday", ttThurs, false},
+		{"Friday", ttFri, false},
+		{"Saturday", ttSat, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			want := tt.want
+			actual := isWeekend(tt.args.t)
+			assert.Equal(t, actual, want, "expected day not failed weekend check")
+		})
+	}
+}
+
+//func Test_nextWeek(t *testing.T) {
+//	type args struct {
+//		t time.Time
+//	}
+//	tests := []struct {
+//		name string
+//		args args
+//		want time.Time
+//	}{
+//		// TODO: Add test cases.
+//	}
+//	for _, tt := range tests {
+//		t.Run(tt.name, func(t *testing.T) {
+//			if got := nextWeek(tt.args.t); !reflect.DeepEqual(got, tt.want) {
+//				t.Errorf("nextWeek() = %v, want %v", got, tt.want)
+//			}
+//		})
+//	}
+//}
+//
+//func Test_tomorrow(t *testing.T) {
+//	type args struct {
+//		t time.Time
+//	}
+//	tests := []struct {
+//		name string
+//		args args
+//		want time.Time
+//	}{
+//		// TODO: Add test cases.
+//	}
+//	for _, tt := range tests {
+//		t.Run(tt.name, func(t *testing.T) {
+//			if got := tomorrow(tt.args.t); !reflect.DeepEqual(got, tt.want) {
+//				t.Errorf("tomorrow() = %v, want %v", got, tt.want)
+//			}
+//		})
+//	}
+//}
+
+func Test_now(t *testing.T) {
+	got := now()
+	want := time.Now()
+
+	assert.Equal(t, got, want, "now() does not match system time")
+}

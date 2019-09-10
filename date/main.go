@@ -49,11 +49,12 @@ func isWeekend(t time.Time) bool {
 
 // isWeekday returns true if a given datetime lands on a weekday, false when it doesn't.
 func isWeekday(t time.Time) bool {
-	if (t.Weekday().String() != "Saturday") || (t.Weekday().String() != "Sunday") {
-		return true
+
+	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
+		return false
 	}
 
-	return false
+	return true
 }
 
 // getMonthLong returns the full month of a given datetime
