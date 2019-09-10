@@ -2,6 +2,7 @@ package date
 
 import (
 	"math/rand"
+	"strconv"
 	"time"
 )
 
@@ -71,6 +72,16 @@ func tomorrow(t time.Time) time.Time {
 	// years, months, days
 	tomorrow := t.AddDate(0, 0, 1)
 	return tomorrow
+	// today -> 2019-09-08 13:23:52.73977 -0400 EDT
+	// tomorrow -> 2019-09-09 13:23:52.73977 -0400 EDT
+}
+
+// yesterday accepts a dt and returns the previous day
+func yesterday(t time.Time) time.Time {
+	// add 1 int day
+	// years, months, days
+	yesterday := t.AddDate(0, 0, -1)
+	return yesterday
 	// today -> 2019-09-08 13:23:52.73977 -0400 EDT
 	// tomorrow -> 2019-09-09 13:23:52.73977 -0400 EDT
 }
@@ -201,7 +212,14 @@ func compare(t1 time.Time, t2 time.Time) int {
 }
 
 // diff accepts two strings and returns the difference in days
+// If you want a more robust solution, switch my diff() for Sam's daysBetween()
+// which covers days that aren't 24 hours
 func diff(t1 time.Time, t2 time.Time) float64 {
+	// We'll get a negative number if subtract a time that's after
+	if t2.After(t1) {
+		t1, t2 = t2, t1
+	}
+
 	diff := t1.Sub(t2)
 	// Sub returns hours so we have to divide by 24 if it's more than 24
 	if diff.Hours() >= 24 {
@@ -230,4 +248,52 @@ func epochMilli(t time.Time) int64 {
 	// 1000000 nanoseconds in 1 millisecond
 	millis := nanos / 1000000
 	return millis
+}
+
+// daysInYear returns the number of days in a year including leap years
+func daysInYear(s string) float64 {
+	// gives us the first day of the year
+	t1 := startOfYear(s)
+	// gives us the last day of the year
+	// we need to add 1 day to account for the last day
+	t2 := endOfYear(s).AddDate(0, 0, 1)
+	// get number of days between the first day and last day of the year
+	// since diff subtracts, we need to pass the larger date first
+	days := diff(t2, t1)
+
+	return days
+}
+
+// startOfYear accepts a year string and returns the start of that given year
+func startOfYear(s string) time.Time {
+	// convert year string to int
+	y, _ := strconv.Atoi(s)
+	start := time.Date(y, time.January, 1, 0, 0, 0, 0, time.UTC)
+	return start
+}
+
+// endOfYear accepts a year string and returns the end of that given year
+func endOfYear(s string) time.Time {
+	// convert year string to int
+	y, _ := strconv.Atoi(s)
+	end := time.Date(y, time.December, 31, 0, 0, 0, 0, time.UTC)
+	return end
+}
+
+// diff() can cause issues if a dt isn't 24 hours, daysBetween solves this
+// Courtesy of Sam Rose's post on dev.to
+// https://dev.to/samwho/get-the-number-of-days-between-two-dates-in-go-5bf3
+// daysBetween returns the number of days in between two dt
+func daysBetween(t1, t2 time.Time) int {
+	if t1.After(t2) {
+		t1, t2 = t2, t1
+	}
+
+	days := -t1.YearDay()
+	for year := t1.Year(); year < t2.Year(); year++ {
+		days += time.Date(year, time.December, 31, 0, 0, 0, 0, time.UTC).YearDay()
+	}
+	days += t2.YearDay()
+
+	return days
 }
