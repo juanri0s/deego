@@ -5,12 +5,37 @@ import (
 	"time"
 )
 
+// For functions that accept strings, if your string doesn't follow the year-month-day
+// ISO8601 layout, replace the layout string and it should still work.
+// For functions that accept go time, if you want to use a string, then you will first need to convert
+// using time.Parse.
+// If you prefer accepting time over strings, then the conversion in some methods is not needed and only
+// the logic needs to be used.
+
 // sampleTime generates a time that is used for testing
 func sampleTime() time.Time {
 	s := "2019-01-22"
 	layout := "2006-01-02"
 	t, _ := time.Parse(layout, s)
 	return t
+}
+
+// toTime converts a string to a datetime based on a given layout
+// layout here is ISO8601 YYYY-MM-DD but the layout can be changed to fit your needs
+func toTime(s string) time.Time {
+	layout := "2006-01-02"
+	t, _ := time.Parse(layout, s)
+
+	return t
+}
+
+// roundT accepts a datetime and returns the same date with time rounded down
+func roundT(t time.Time) time.Time {
+	// only assign the day, month, year to achieve the time being 00:00:00
+	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	return rounded
+	// t -> 2019-09-10 23:00:00 +0000 UTC
+	// rounded -> 2019-09-10 00:00:00 +0000 UTC
 }
 
 // randomDate generates a random date
@@ -23,14 +48,24 @@ func randomDate() time.Time {
 	return time.Unix(sec, 0)
 }
 
-// now returns the current datetime
+// now returns the exact current datetime
 func now() time.Time {
 	t := time.Now()
 	return t
 	// 2019-09-08 00:00:00.619429 -0400 EDT
 }
 
-// tomorrow returns the datetime of the next day from the datetime given
+// today returns the current day rounded down to the start of the day
+func today() time.Time {
+	t := time.Now()
+	// only assign the day, month, year to achieve the time being 00:00:00
+	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	return rounded
+	// t -> 2019-09-10 23:00:00 +0000 UTC
+	// rounded -> 2019-09-10 00:00:00 +0000 UTC
+}
+
+// tomorrow accepts a dt and returns the next day
 func tomorrow(t time.Time) time.Time {
 	// add 1 int day
 	// years, months, days
@@ -40,7 +75,7 @@ func tomorrow(t time.Time) time.Time {
 	// tomorrow -> 2019-09-09 13:23:52.73977 -0400 EDT
 }
 
-// nextWeek returns the datetime of one week from the datetime given
+// nextWeek accepts a dt and returns the dt one week later
 func nextWeek(t time.Time) time.Time {
 	// years, months, days
 	// 7 days * the number of weeks we want to add
@@ -50,7 +85,7 @@ func nextWeek(t time.Time) time.Time {
 	// next week -> 2019-09-15 13:23:52.73977 -0400 EDT
 }
 
-// isWeekend returns true if a given datetime lands on a weekend, false when it doesn't.
+// isWeekend accepts a dt and returns true if it lands on a weekend, false if it doesn't.
 func isWeekend(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return true
@@ -59,7 +94,7 @@ func isWeekend(t time.Time) bool {
 	return false
 }
 
-// isWeekday returns true if a given datetime lands on a weekday, false when it doesn't.
+// isWeekday accepts a dt and returns true if it lands on a weekday, false if it doesn't.
 func isWeekday(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return false
@@ -68,23 +103,23 @@ func isWeekday(t time.Time) bool {
 	return true
 }
 
-// getMonthLong returns the full month of a given datetime
-func getMonthLong(t time.Time) string {
+// monthLong accepts a dt and returns the full month name.
+func monthLong(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()
 
 	return month
 }
 
-// getMonthShort returns the abbreviated month of a given datetime
-func getMonthShort(t time.Time) string {
+// getMonthShort accepts a dt returns the abbreviated month name.
+func monthShort(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()[:3]
 
 	return month
 }
 
-// last returns the datetime from the last day that was given, for example last Thursday
+// last accepts a weekday (Saturday) and returns the dt of the last occurence
 func last(wd time.Weekday) time.Time {
 	t := sampleTime()
 	// Converts day of week to its int form
@@ -106,7 +141,7 @@ func last(wd time.Weekday) time.Time {
 	return t.AddDate(0, 0, -(7 - diff))
 }
 
-// next returns the dt of the next given day, for example next Thursday
+// next accepts a weekday (Saturday) and returns the dt of the next occurence
 func next(wd time.Weekday) time.Time {
 	t := sampleTime()
 	// Converts day of week to its int form
@@ -128,7 +163,6 @@ func next(wd time.Weekday) time.Time {
 	return t.AddDate(0, 0, 7+(diff))
 }
 
-
 // utc accepts a date string and a timezone and converts the time to utc
 // utc is not possible without an initial tz
 func utc(s string, tz string) time.Time {
@@ -141,13 +175,33 @@ func utc(s string, tz string) time.Time {
 	return t.UTC()
 }
 
+// equal accepts two date strings and checks if they are equal
+func equal(t1 time.Time, t2 time.Time) bool {
+	if t1 == t2 {
+		return true
+	}
+
+	return false
+}
+
+// compare accepts two strings and returns the comparison based on the first parameter
+// 1 = greater, -1 = less than, 0 = equal
+func compare(t1 time.Time, t2 time.Time) int {
+	if t1.After(t2) {
+		return 1
+	}
+
+	if t1.Before(t2) {
+		return -1
+	}
+
+	// can also be checked with ==
+	// but since it's the last condition we just return it
+	return 0
+}
 
 // diff accepts two strings and returns the difference in days
-func diff(s1 string, s2 string) float64 {
-	layout := "2006-01-02"
-	t1, _ := time.Parse(layout, s1)
-	t2, _ := time.Parse(layout, s2)
-
+func diff(t1 time.Time, t2 time.Time) float64 {
 	diff := t1.Sub(t2)
 	// Sub returns hours so we have to divide by 24 if it's more than 24
 	if diff.Hours() >= 24 {
@@ -157,3 +211,23 @@ func diff(s1 string, s2 string) float64 {
 	return diff.Hours()
 }
 
+// epochSec accepts a time and returns the number of elapsed seconds from unix epoch
+func epochSec(t time.Time) int64 {
+	secs := t.Unix()
+	return secs
+}
+
+// epochNano accepts a time and returns the number of elapsed nanoseconds from unix epoch
+func epochNano(t time.Time) int64 {
+	nanos := t.UnixNano()
+	return nanos
+}
+
+// epochMilli accepts a time and returns the number of elapsed milliseconds from unix epoch
+func epochMilli(t time.Time) int64 {
+	nanos := t.UnixNano()
+	// go does not have UnixMillis, so we have to divide manually from nanos
+	// 1000000 nanoseconds in 1 millisecond
+	millis := nanos / 1000000
+	return millis
+}
