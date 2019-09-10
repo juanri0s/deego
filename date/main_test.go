@@ -294,10 +294,3 @@ func Test_tomorrow(t *testing.T) {
 
 	assert.Equal(t, got, want, "invalid date for tomorrow")
 }
-
-func Test_now(t *testing.T) {
-	got := now()
-	want := time.Now()
-
-	assert.Equal(t, got, want, "now() does not match system time")
-}
