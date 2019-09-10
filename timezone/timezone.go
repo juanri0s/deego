@@ -10,14 +10,6 @@ import (
 // - time.Now() defaults to UTC time, so the offset is going to
 // always be 0 unless the timezone is specified
 
-// sampleTime generates a time that is used for testing.
-func sampleTime() time.Time {
-	s := "2019-01-22"
-	layout := "2006-01-02"
-	t, _ := time.Parse(layout, s)
-	return t
-}
-
 // currTimezone returns the timezone from the current dt.
 // https://play.golang.org/p/-W0J32E3DKf
 func currTimezone() string {
@@ -27,7 +19,7 @@ func currTimezone() string {
 }
 
 // timezone returns the timezone from a given dt.
-// https://play.golang.org/p/skYyMq9dne6
+// https://play.golang.org/p/vDwLPVND9Sg
 func timezone(t time.Time) string {
 	// z - timezone returned as the zone
 	z, _ := t.Zone()
@@ -52,7 +44,7 @@ func currOffset() int {
 
 // offset returns the timezone offset (in seconds)
 // from the given dt.
-// https://play.golang.org/p/iQdonhxZzZH
+// https://play.golang.org/p/xXDggA2xr9o
 func offset(t time.Time) int {
 	// o - offset returned in seconds
 	_, o := t.Zone()

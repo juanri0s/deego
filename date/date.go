@@ -23,7 +23,8 @@ func sampleTime() time.Time {
 }
 
 // toTime converts a string to a datetime based on a given layout
-// layout here is ISO8601 YYYY-MM-DD but the layout can be changed to fit your needs
+// layout here is ISO8601 YYYY-MM-DD but the layout can be changed to fit your needs.
+// https://play.golang.org/p/P8dLlTWnihY
 func toTime(s string) time.Time {
 	layout := "2006-01-02"
 	t, _ := time.Parse(layout, s)
@@ -31,8 +32,9 @@ func toTime(s string) time.Time {
 	return t
 }
 
-// roundT accepts a datetime and returns the same date with time rounded down
-func roundT(t time.Time) time.Time {
+// roundDate accepts a datetime and returns the same date with time rounded down.
+// https://play.golang.org/p/pr2c_g8nOFH
+func roundDate(t time.Time) time.Time {
 	// only assign the day, month, year to achieve the time being 00:00:00
 	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 	return rounded
@@ -41,26 +43,29 @@ func roundT(t time.Time) time.Time {
 }
 
 // randomDate generates a random date
+// https://play.golang.org/p/ZD1WdZgffaA
 func randomDate() time.Time {
-	min := time.Date(1990, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
-	max := time.Date(2030, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
+	min := time.Date(2018, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
+	max := time.Date(2019, 1, 0, 0, 0, 0, 0, time.UTC).Unix()
 	delta := max - min
 
 	sec := rand.Int63n(delta) + min
 	return time.Unix(sec, 0)
 }
 
-// today returns the current day rounded down to the start of the day
+// today returns the current day rounded down to the start of the day.
+// https://play.golang.org/p/hwWlvlX-Joq
 func today() time.Time {
 	t := time.Now()
 	// only assign the day, month, year to achieve the time being 00:00:00
-	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	rounded := roundDate(t)
 	return rounded
 	// t -> 2019-09-10 23:00:00 +0000 UTC
 	// rounded -> 2019-09-10 00:00:00 +0000 UTC
 }
 
-// tomorrow accepts a dt and returns the next day
+// tomorrow accepts a dt and returns the next day.
+// https://play.golang.org/p/waBNYtVGEjZ
 func tomorrow(t time.Time) time.Time {
 	// add 1 int day
 	// years, months, days
@@ -70,7 +75,8 @@ func tomorrow(t time.Time) time.Time {
 	// tomorrow -> 2019-09-09 13:23:52.73977 -0400 EDT
 }
 
-// yesterday accepts a dt and returns the previous day
+// yesterday accepts a dt and returns the previous day.
+// https://play.golang.org/p/pkt5oNApY3O
 func yesterday(t time.Time) time.Time {
 	// add 1 int day
 	// years, months, days
@@ -80,17 +86,19 @@ func yesterday(t time.Time) time.Time {
 	// tomorrow -> 2019-09-09 13:23:52.73977 -0400 EDT
 }
 
-// nextWeek accepts a dt and returns the dt one week later
+// nextWeek accepts a dt and returns the dt one week later.
+// https://play.golang.org/p/LlZIlpaiHJ3
 func nextWeek(t time.Time) time.Time {
 	// years, months, days
 	// 7 days * the number of weeks we want to add
-	nextWeek := t.AddDate(0, 0, 1)
+	nextWeek := t.AddDate(0, 0, 7)
 	return nextWeek
 	// today -> 2019-09-08 13:23:52.73977 -0400 EDT
 	// next week -> 2019-09-15 13:23:52.73977 -0400 EDT
 }
 
 // isWeekend accepts a dt and returns true if it lands on a weekend, false if it doesn't.
+// https://play.golang.org/p/mNX65LSJey4
 func isWeekend(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return true
@@ -100,6 +108,7 @@ func isWeekend(t time.Time) bool {
 }
 
 // isWeekday accepts a dt and returns true if it lands on a weekday, false if it doesn't.
+// https://play.golang.org/p/UToSOoUrI0H
 func isWeekday(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return false
@@ -109,22 +118,22 @@ func isWeekday(t time.Time) bool {
 }
 
 // monthLong accepts a dt and returns the full month name.
+// https://play.golang.org/p/JDtYIqCipbu
 func monthLong(t time.Time) string {
-	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()
-
 	return month
 }
 
-// getMonthShort accepts a dt returns the abbreviated month name.
+// monthShort accepts a dt returns the abbreviated month name.
+// https://play.golang.org/p/oVorpqtpb7D
 func monthShort(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()[:3]
-
 	return month
 }
 
-// last accepts a weekday (Saturday) and returns the dt of the last occurence
+// last accepts a weekday (Saturday) and returns the dt of the last occurrence.
+// https://play.golang.org/p/GABxlzkbWXb
 func last(wd time.Weekday) time.Time {
 	t := sampleTime()
 	// Converts day of week to its int form
@@ -146,7 +155,8 @@ func last(wd time.Weekday) time.Time {
 	return t.AddDate(0, 0, -(7 - diff))
 }
 
-// next accepts a weekday (Saturday) and returns the dt of the next occurence
+// next accepts a weekday (Saturday) and returns the dt of the next occurrence.
+// https://play.golang.org/p/4BMDqpG-QRH
 func next(wd time.Weekday) time.Time {
 	t := sampleTime()
 	// Converts day of week to its int form
@@ -169,7 +179,8 @@ func next(wd time.Weekday) time.Time {
 }
 
 // utc accepts a date string and a timezone and converts the time to utc
-// utc is not possible without an initial tz
+// utc is not possible without an initial tz.
+// https://play.golang.org/p/2ITa-xA4YpA
 func utc(s string, tz string) time.Time {
 	layout := "2006-01-02"
 
@@ -180,7 +191,8 @@ func utc(s string, tz string) time.Time {
 	return t.UTC()
 }
 
-// equal accepts two date strings and checks if they are equal
+// equal accepts two date strings and checks if they are equal.
+// https://play.golang.org/p/aErKIb3Eg53
 func equal(t1 time.Time, t2 time.Time) bool {
 	if t1.Equal(t2) {
 		return true
@@ -191,6 +203,7 @@ func equal(t1 time.Time, t2 time.Time) bool {
 
 // compare accepts two strings and returns the comparison based on the first parameter
 // 1 = greater, -1 = less than, 0 = equal
+// https://play.golang.org/p/kHBExOiL1tW
 func compare(t1 time.Time, t2 time.Time) int {
 	if t1.After(t2) {
 		return 1
@@ -207,7 +220,8 @@ func compare(t1 time.Time, t2 time.Time) int {
 
 // diff accepts two strings and returns the difference in days
 // If you want a more robust solution, switch my diff() for Sam's daysBetween()
-// which covers days that aren't 24 hours
+// which covers which handles the conversion much better.
+// https://play.golang.org/p/83--9vlZQt1
 func diff(t1 time.Time, t2 time.Time) float64 {
 	// We'll get a negative number if subtract a time that's after
 	if t2.After(t1) {
@@ -223,7 +237,8 @@ func diff(t1 time.Time, t2 time.Time) float64 {
 	return diff.Hours()
 }
 
-// epochSec accepts a time and returns the number of elapsed seconds from unix epoch
+// epochSec accepts a time and returns the number of elapsed seconds from unix epoch.
+// https://play.golang.org/p/cq1y6r7qiYd
 func epochSec(t time.Time) int64 {
 	secs := t.Unix()
 	return secs
@@ -273,7 +288,7 @@ func endOfYear(s string) time.Time {
 	return end
 }
 
-// diff() can cause issues if a dt isn't 24 hours, daysBetween solves this
+// diff() can cause issues since it also accounts for time, daysBetween() solves this
 // Courtesy of Sam Rose's post on dev.to
 // https://dev.to/samwho/get-the-number-of-days-between-two-dates-in-go-5bf3
 // daysBetween returns the number of days in between two dt
