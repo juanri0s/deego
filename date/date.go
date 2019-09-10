@@ -5,11 +5,26 @@ import (
 	"time"
 )
 
+// For functions that accept strings, if your string doesn't follow the year-month-day
+// ISO8601 layout, replace the layout string and it should still work.
+// For functions that accept go time, if you want to use a string, then you will first need to convert
+// using time.Parse.
+// If you prefer accepting time over strings, then the conversion in some methods is not needed and only
+// the logic needs to be used.
+
 // sampleTime generates a time that is used for testing
 func sampleTime() time.Time {
 	s := "2019-01-22"
 	layout := "2006-01-02"
 	t, _ := time.Parse(layout, s)
+	return t
+}
+
+// layout is ISO8601 YYYY-MM-DD but the layout can be changed to fit your needs
+func toTime(s string) time.Time {
+	layout := "2006-01-02"
+	t, _ := time.Parse(layout, s)
+
 	return t
 }
 
@@ -150,12 +165,7 @@ func utc(s string, tz string) time.Time {
 }
 
 // equal accepts two date strings and checks if they are equal
-// to check if two go times are equal the if condition is all that's needed
-func equal(s1 string, s2 string) bool {
-	layout := "2006-01-02"
-	t1, _ := time.Parse(layout, s1)
-	t2, _ := time.Parse(layout, s2)
-
+func equal(t1 time.Time, t2 time.Time) bool {
 	if t1 == t2 {
 		return true
 	}
@@ -165,12 +175,7 @@ func equal(s1 string, s2 string) bool {
 
 // compare accepts two strings and returns the comparison based on the first parameter
 // 1 = greater, -1 = less than, 0 = equal
-// to get the diff between two go times, the if logic is all that's needed
-func compare(s1 string, s2 string) int {
-	layout := "2006-01-02"
-	t1, _ := time.Parse(layout, s1)
-	t2, _ := time.Parse(layout, s2)
-
+func compare(t1 time.Time, t2 time.Time) int {
 	if t1.After(t2) {
 		return 1
 	}
@@ -185,12 +190,7 @@ func compare(s1 string, s2 string) int {
 }
 
 // diff accepts two strings and returns the difference in days
-// to get the diff between two go times, the sub and if conditions is all that's needed
-func diff(s1 string, s2 string) float64 {
-	layout := "2006-01-02"
-	t1, _ := time.Parse(layout, s1)
-	t2, _ := time.Parse(layout, s2)
-
+func diff(t1 time.Time, t2 time.Time) float64 {
 	diff := t1.Sub(t2)
 	// Sub returns hours so we have to divide by 24 if it's more than 24
 	if diff.Hours() >= 24 {
@@ -198,4 +198,25 @@ func diff(s1 string, s2 string) float64 {
 	}
 
 	return diff.Hours()
+}
+
+// epochSec accepts a time and returns the number of elapsed seconds from unix epoch
+func epochSec(t time.Time) int64 {
+	secs := t.Unix()
+	return secs
+}
+
+// epochNano accepts a time and returns the number of elapsed nanoseconds from unix epoch
+func epochNano(t time.Time) int64 {
+	nanos := t.UnixNano()
+	return nanos
+}
+
+// epochMilli accepts a time and returns the number of elapsed milliseconds from unix epoch
+func epochMilli(t time.Time) int64 {
+	nanos := t.UnixNano()
+	// go does not have UnixMillis, so we have to divide manually from nanos
+	// 1000000 nanoseconds in 1 millisecond
+	millis := nanos / 1000000
+	return millis
 }
