@@ -283,26 +283,17 @@ func Test_isWeekend(t *testing.T) {
 //		})
 //	}
 //}
-//
-//func Test_tomorrow(t *testing.T) {
-//	type args struct {
-//		t time.Time
-//	}
-//	tests := []struct {
-//		name string
-//		args args
-//		want time.Time
-//	}{
-//		// TODO: Add test cases.
-//	}
-//	for _, tt := range tests {
-//		t.Run(tt.name, func(t *testing.T) {
-//			if got := tomorrow(tt.args.t); !reflect.DeepEqual(got, tt.want) {
-//				t.Errorf("tomorrow() = %v, want %v", got, tt.want)
-//			}
-//		})
-//	}
-//}
+
+func Test_tomorrow(t *testing.T) {
+	st := sampleTime()
+	got := tomorrow(st)
+
+	s := "2019-01-23"
+	layout := "2006-01-02"
+	want, _ := time.Parse(layout, s)
+
+	assert.Equal(t, got, want, "invalid date for tomorrow")
+}
 
 func Test_now(t *testing.T) {
 	got := now()
