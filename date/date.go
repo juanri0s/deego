@@ -6,11 +6,12 @@ import (
 	"time"
 )
 
-// For functions that accept strings, if your string doesn't follow the year-month-day
+// NOTES:
+// - For functions that accept strings, if your string doesn't follow the year-month-day
 // ISO8601 layout, replace the layout string and it should still work.
-// For functions that accept go time, if you want to use a string, then you will first need to convert
+// - For functions that accept go time, if you want to use a string, then you will first need to convert
 // using time.Parse.
-// If you prefer accepting time over strings, then the conversion in some methods is not needed and only
+// - If you prefer accepting time over strings, then the conversion in some methods is not needed and only
 // the logic needs to be used.
 
 // sampleTime generates a time that is used for testing
@@ -47,13 +48,6 @@ func randomDate() time.Time {
 
 	sec := rand.Int63n(delta) + min
 	return time.Unix(sec, 0)
-}
-
-// now returns the exact current datetime
-func now() time.Time {
-	t := time.Now()
-	return t
-	// 2019-09-08 00:00:00.619429 -0400 EDT
 }
 
 // today returns the current day rounded down to the start of the day
