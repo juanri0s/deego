@@ -127,3 +127,33 @@ func next(wd time.Weekday) time.Time {
 
 	return t.AddDate(0, 0, 7+(diff))
 }
+
+
+// utc accepts a date string and a timezone and converts the time to utc
+// utc is not possible without an initial tz
+func utc(s string, tz string) time.Time {
+	layout := "2006-01-02"
+
+	// normally we would handle the errors here instead of escaping them
+	z, _ := time.LoadLocation(tz)
+	t, _ := time.ParseInLocation(layout, s, z)
+
+	return t.UTC()
+}
+
+
+// diff accepts two strings and returns the difference in days
+func diff(s1 string, s2 string) float64 {
+	layout := "2006-01-02"
+	t1, _ := time.Parse(layout, s1)
+	t2, _ := time.Parse(layout, s2)
+
+	diff := t1.Sub(t2)
+	// Sub returns hours so we have to divide by 24 if it's more than 24
+	if diff.Hours() >= 24 {
+		return diff.Hours() / 24
+	}
+
+	return diff.Hours()
+}
+
