@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// sampleTime generates a time that is used for testing
 func sampleTime() time.Time {
 	s := "2019-01-22"
 	layout := "2006-01-02"
@@ -29,7 +30,7 @@ func now() time.Time {
 	// 2019-09-08 00:00:00.619429 -0400 EDT
 }
 
-// tomorrow retuns the datetime of the next day from the datetime given
+// tomorrow returns the datetime of the next day from the datetime given
 func tomorrow(t time.Time) time.Time {
 	// add 1 int day
 	// years, months, days
