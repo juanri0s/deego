@@ -20,12 +20,22 @@ func sampleTime() time.Time {
 	return t
 }
 
-// layout is ISO8601 YYYY-MM-DD but the layout can be changed to fit your needs
+// toTime converts a string to a datetime based on a given layout
+// layout here is ISO8601 YYYY-MM-DD but the layout can be changed to fit your needs
 func toTime(s string) time.Time {
 	layout := "2006-01-02"
 	t, _ := time.Parse(layout, s)
 
 	return t
+}
+
+// roundT accepts a datetime and returns the same date with time rounded down
+func roundT(t time.Time) time.Time {
+	// only assign the day, month, year to achieve the time being 00:00:00
+	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	return rounded
+	// t -> 2019-09-10 23:00:00 +0000 UTC
+	// rounded -> 2019-09-10 00:00:00 +0000 UTC
 }
 
 // randomDate generates a random date
@@ -38,7 +48,7 @@ func randomDate() time.Time {
 	return time.Unix(sec, 0)
 }
 
-// now returns the current datetime
+// now returns the exact current datetime
 func now() time.Time {
 	t := time.Now()
 	return t
@@ -46,7 +56,8 @@ func now() time.Time {
 }
 
 // today returns the current day rounded down to the start of the day
-func today(t time.Time) time.Time {
+func today() time.Time {
+	t := time.Now()
 	// only assign the day, month, year to achieve the time being 00:00:00
 	rounded := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 	return rounded
@@ -54,7 +65,7 @@ func today(t time.Time) time.Time {
 	// rounded -> 2019-09-10 00:00:00 +0000 UTC
 }
 
-// tomorrow returns the datetime of the next day from the datetime given
+// tomorrow accepts a dt and returns the next day
 func tomorrow(t time.Time) time.Time {
 	// add 1 int day
 	// years, months, days
@@ -64,7 +75,7 @@ func tomorrow(t time.Time) time.Time {
 	// tomorrow -> 2019-09-09 13:23:52.73977 -0400 EDT
 }
 
-// nextWeek returns the datetime of one week from the datetime given
+// nextWeek accepts a dt and returns the dt one week later
 func nextWeek(t time.Time) time.Time {
 	// years, months, days
 	// 7 days * the number of weeks we want to add
@@ -74,7 +85,7 @@ func nextWeek(t time.Time) time.Time {
 	// next week -> 2019-09-15 13:23:52.73977 -0400 EDT
 }
 
-// isWeekend returns true if a given datetime lands on a weekend, false when it doesn't.
+// isWeekend accepts a dt and returns true if it lands on a weekend, false if it doesn't.
 func isWeekend(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return true
@@ -83,7 +94,7 @@ func isWeekend(t time.Time) bool {
 	return false
 }
 
-// isWeekday returns true if a given datetime lands on a weekday, false when it doesn't.
+// isWeekday accepts a dt and returns true if it lands on a weekday, false if it doesn't.
 func isWeekday(t time.Time) bool {
 	if (t.Weekday().String() == "Saturday") || (t.Weekday().String() == "Sunday") {
 		return false
@@ -92,7 +103,7 @@ func isWeekday(t time.Time) bool {
 	return true
 }
 
-// monthLong returns the full month of a given datetime
+// monthLong accepts a dt and returns the full month name.
 func monthLong(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()
@@ -100,7 +111,7 @@ func monthLong(t time.Time) string {
 	return month
 }
 
-// getMonthShort returns the abbreviated month of a given datetime
+// getMonthShort accepts a dt returns the abbreviated month name.
 func monthShort(t time.Time) string {
 	// We want the abbreviated form so lets take the first 3 letters of the string
 	month := t.Month().String()[:3]
@@ -108,7 +119,7 @@ func monthShort(t time.Time) string {
 	return month
 }
 
-// last returns the datetime from the last day that was given, for example last Thursday
+// last accepts a weekday (Saturday) and returns the dt of the last occurence
 func last(wd time.Weekday) time.Time {
 	t := sampleTime()
 	// Converts day of week to its int form
@@ -130,7 +141,7 @@ func last(wd time.Weekday) time.Time {
 	return t.AddDate(0, 0, -(7 - diff))
 }
 
-// next returns the dt of the next given day, for example next Thursday
+// next accepts a weekday (Saturday) and returns the dt of the next occurence
 func next(wd time.Weekday) time.Time {
 	t := sampleTime()
 	// Converts day of week to its int form
