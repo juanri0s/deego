@@ -38,7 +38,7 @@ func Test_isWeekend(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
 			actual := isWeekend(tt.args.t)
-			assert.Equal(t, actual, want, "expected day not failed weekend check")
+			assert.Equal(t, want, actual, "expected day not failed weekend check")
 		})
 	}
 }
