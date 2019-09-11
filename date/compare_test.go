@@ -27,13 +27,12 @@ func Test_compare(t *testing.T) {
 		{"compare -> equal", equal, 0},
 		{"compare -> less than", less, -1},
 		{"compare -> greater than", greater, 1},
-
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
 			actual := compare(tt.args.t1, tt.args.t2)
-			assert.Equal(t, want, actual,"unable to compare times")
+			assert.Equal(t, want, actual, "unable to compare times")
 		})
 	}
 }
