@@ -2,9 +2,13 @@ language: go
 go:
   - "1.12.x"
 install: true
+before_install:
+  - go get -t -v ./...
 script:
   - diff -u <(echo -n) <(gofmt -d -s .)
   - go vet .
-  - go test -v -race ./...
+  - go test -v -race ./... -coverprofile=coverage.txt -covermode=atomic
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 env:
   - GO111MODULE=on
