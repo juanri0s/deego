@@ -1,8 +1,8 @@
 language: go
 go:
   - "1.12.x"
-
 install: true
-
+script:
+  diff -u <(echo -n) <(gofmt -d ./)
 env:
   - GO111MODULE=on
