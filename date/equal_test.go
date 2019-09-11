@@ -6,28 +6,34 @@ import (
 	"time"
 )
 
-func Test_nextWeek(t *testing.T) {
+func Test_equal(t *testing.T) {
+
 	type args struct {
-		t time.Time
+		t1 time.Time
+		t2 time.Time
 	}
 
-	d1 := args{randomDate()}
-	d2 := args{randomDate()}
-	d3 := args{randomDate()}
+	d1 := randomDate()
+	d2 := randomDate()
+	d3 := randomDate()
+
+	t1 := args{d1, d1}
+	t2 := args{d2, d2}
+	t3 := args{d3, d3}
 
 	tests := []struct {
 		name string
 		args args
-		want time.Time
+		want bool
 	}{
-		{"nextWeek 1", d1, d1.t.AddDate(0, 0, 7)},
-		{"nextWeek 2", d2, d2.t.AddDate(0, 0, 7)},
-		{"nextWeek 3", d3, d3.t.AddDate(0, 0, 7)},
+		{"", t1, true},
+		{"", t2, true},
+		{"", t3, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
-			actual := nextWeek(tt.args.t)
+			actual := equal(tt.args.t1, tt.args.t2)
 			assert.Equal(t, want, actual, "dates do not match")
 		})
 	}
