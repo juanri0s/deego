@@ -8,5 +8,3 @@
 
 All functions are well-documented, well-tested*, and contain playground links to directly use or break.
 
-* there are some tests that still need to be created for current functions
-
