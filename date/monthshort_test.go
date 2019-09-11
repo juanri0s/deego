@@ -47,7 +47,7 @@ func Test_MonthShort(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
 			actual := monthShort(tt.args.t)
-			assert.Equal(t, actual, want, "months did not match")
+			assert.Equal(t, want, actual, "months did not match")
 		})
 	}
 }
