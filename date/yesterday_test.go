@@ -23,7 +23,6 @@ func Test_yesterday(t *testing.T) {
 		{"yesterdays date 1", d1, d1.t.AddDate(0, 0, -1)},
 		{"yesterdays date 2", d2, d2.t.AddDate(0, 0, -1)},
 		{"yesterdays date 3", d3, d3.t.AddDate(0, 0, -1)},
-
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
