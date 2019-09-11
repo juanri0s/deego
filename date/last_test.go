@@ -47,7 +47,7 @@ func Test_last(t *testing.T) {
 		want := tt.outputs
 
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, actual, want, "times do not match")
+			assert.Equal(t, want, actual, "times do not match")
 		})
 	}
 }
