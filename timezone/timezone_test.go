@@ -3,6 +3,9 @@ package timezone
 import (
 	"testing"
 	"time"
+
+	d "../date"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_timezone(t *testing.T) {
@@ -10,22 +13,24 @@ func Test_timezone(t *testing.T) {
 		t time.Time
 	}
 
-	// t1 := args{}
-	// t2 := args{d.randomDate()}
-	// t3 := args{d.randomDate()}
+	t1 := args{d.RandomDate()}
+	t2 := args{d.RandomDate()}
+	t3 := args{d.RandomDate()}
 
 	tests := []struct {
 		name string
 		args args
 		want string
 	}{
-		// TODO: Add test cases.
+		{"Grabbing timezone", t1, "EDT"},
+		{"Grabbing timezone", t2, "EDT"},
+		{"Grabbing timezone", t3, "EDT"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := timezone(tt.args.t); got != tt.want {
-				t.Errorf("timezone() = %v, want %v", got, tt.want)
-			}
+			want := tt.want
+			actual := timezone(tt.args.t)
+			assert.Equal(t, want, actual, "unable to determine timezone from time")
 		})
 	}
 }
