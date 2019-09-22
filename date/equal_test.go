@@ -13,9 +13,9 @@ func Test_equal(t *testing.T) {
 		t2 time.Time
 	}
 
-	d1 := randomDate()
-	d2 := randomDate()
-	d3 := randomDate()
+	d1 := RandomDate()
+	d2 := RandomDate()
+	d3 := RandomDate()
 
 	t1 := args{d1, d1}
 	t2 := args{d2, d2}
