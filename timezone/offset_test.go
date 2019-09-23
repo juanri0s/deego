@@ -1,14 +1,14 @@
 package timezone
 
 import (
+	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
 
 	d "../date"
-	"github.com/stretchr/testify/assert"
 )
 
-func Test_timezone(t *testing.T) {
+func Test_offset(t *testing.T) {
 	type args struct {
 		t time.Time
 	}
@@ -20,17 +20,17 @@ func Test_timezone(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want string
+		want int
 	}{
-		{"Timezone from time test #1", t1, "EST"},
-		{"Timezone from time test #2", t2, "EDT"},
-		{"Timezone from time test #3", t3, "EST"},
+		{"Timezone from time test #1", t1, -14400},
+		{"Timezone from time test #2", t2, -14400},
+		{"Timezone from time test #3", t3, -14400},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			want := tt.want
-			actual := timezone(tt.args.t)
-			assert.Equal(t, want, actual, "unable to determine timezone from time")
+			actual := offset(tt.args.t)
+			assert.Equal(t, want, actual, "unable to determine offset from time")
 		})
 	}
 }
