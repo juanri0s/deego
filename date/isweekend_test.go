@@ -11,7 +11,7 @@ func Test_isWeekend(t *testing.T) {
 		t time.Time
 	}
 
-	st := sampleTime()
+	st := SampleTime()
 
 	ttSun := args{st.AddDate(0, 0, 5)}
 	ttMon := args{st.AddDate(0, 0, 6)}

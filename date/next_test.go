@@ -7,7 +7,7 @@ import (
 )
 
 func Test_next(t *testing.T) {
-	st := sampleTime()
+	st := SampleTime()
 
 	ttSun := st.AddDate(0, 0, 5)
 	ttMon := st.AddDate(0, 0, 6)
