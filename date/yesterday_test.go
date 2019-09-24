@@ -11,9 +11,9 @@ func Test_yesterday(t *testing.T) {
 		t time.Time
 	}
 
-	d1 := args{randomDate()}
-	d2 := args{randomDate()}
-	d3 := args{randomDate()}
+	d1 := args{RandomDate()}
+	d2 := args{RandomDate()}
+	d3 := args{RandomDate()}
 
 	tests := []struct {
 		name string

@@ -12,9 +12,9 @@ func Test_diff(t *testing.T) {
 		t2 time.Time
 	}
 
-	d1 := randomDate()
-	d2 := randomDate()
-	d3 := randomDate()
+	d1 := RandomDate()
+	d2 := RandomDate()
+	d3 := RandomDate()
 
 	t1 := args{d1, d1.AddDate(0, 0, 1)}
 	t2 := args{d2, d2.AddDate(0, 0, 30)}
@@ -26,7 +26,7 @@ func Test_diff(t *testing.T) {
 		want float64
 	}{
 		{"1 day diff", t1, 1},
-		{"2 day diff", t2, 30},
+		{"30 day diff", t2, 30},
 		{"0 days diff", t3, 0},
 	}
 	for _, tt := range tests {
@@ -34,6 +34,14 @@ func Test_diff(t *testing.T) {
 			want := tt.want
 			actual := diff(tt.args.t1, tt.args.t2)
 			assert.Equal(t, want, actual, "diff could not be calculated")
+		})
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			want := tt.want
+			actual := daysBetween(tt.args.t1, tt.args.t2)
+			assert.Equal(t, want, actual, "daysBetween could not be calculated")
 		})
 	}
 }

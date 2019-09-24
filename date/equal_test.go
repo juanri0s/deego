@@ -13,22 +13,22 @@ func Test_equal(t *testing.T) {
 		t2 time.Time
 	}
 
-	d1 := randomDate()
-	d2 := randomDate()
-	d3 := randomDate()
+	d1 := RandomDate()
+	d2 := RandomDate()
+	d3 := RandomDate()
 
 	t1 := args{d1, d1}
 	t2 := args{d2, d2}
-	t3 := args{d3, d3}
+	t3 := args{d3, time.Now()}
 
 	tests := []struct {
 		name string
 		args args
 		want bool
 	}{
-		{"", t1, true},
-		{"", t2, true},
-		{"", t3, true},
+		{"compare times #1", t1, true},
+		{"compare times #2", t2, true},
+		{"compare times #3", t3, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

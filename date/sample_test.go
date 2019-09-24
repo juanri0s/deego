@@ -7,6 +7,6 @@ import (
 )
 
 func Test_sampleTime(t *testing.T) {
-	actual := sampleTime()
+	actual := SampleTime()
 	assert.IsType(t, time.Time{}, actual, "output is not a datetime")
 }

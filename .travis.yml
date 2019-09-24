@@ -1,10 +1,10 @@
 language: go
 go:
   - "1.12.x"
-install: true
-before_install:
-  - go get -t -v ./...
+install:
+  -
 script:
+  - go get -t -v ./...
   - diff -u <(echo -n) <(gofmt -d -s .)
   - go vet .
   - go test -v -race ./... -coverprofile=coverage.txt -covermode=atomic

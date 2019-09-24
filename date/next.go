@@ -5,7 +5,7 @@ import "time"
 // next accepts a weekday (Saturday) and returns the dt of the next occurrence.
 // https://play.golang.org/p/4BMDqpG-QRH
 func next(wd time.Weekday) time.Time {
-	t := sampleTime()
+	t := SampleTime()
 	// Converts day of week to its int form
 	// Sunday = 0, Saturday = 7
 	cd := int(t.Weekday())

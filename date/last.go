@@ -5,7 +5,7 @@ import "time"
 // last accepts a weekday (Saturday) and returns the dt of the last occurrence.
 // https://play.golang.org/p/GABxlzkbWXb
 func last(wd time.Weekday) time.Time {
-	t := sampleTime()
+	t := SampleTime()
 	// Converts day of week to its int form
 	// Sunday = 0, Saturday = 7
 	cd := int(t.Weekday())

@@ -7,7 +7,7 @@ import (
 )
 
 func Test_last(t *testing.T) {
-	st := sampleTime()
+	st := SampleTime()
 
 	ttSun := st.AddDate(0, 0, -2)
 	ttMon := st.AddDate(0, 0, -1)

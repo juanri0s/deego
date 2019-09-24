@@ -12,7 +12,7 @@ func Test_compare(t *testing.T) {
 		t2 time.Time
 	}
 
-	date1 := sampleTime()
+	date1 := SampleTime()
 	date2 := today()
 
 	equal := args{date1, date1}
