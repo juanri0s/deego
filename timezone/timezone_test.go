@@ -14,8 +14,6 @@ func Test_timezone(t *testing.T) {
 	}
 
 	t1 := args{date.SampleTime()}
-	t2 := args{date.SampleTime()}
-	t3 := args{date.SampleTime()}
 
 	tests := []struct {
 		name string
@@ -23,8 +21,6 @@ func Test_timezone(t *testing.T) {
 		want string
 	}{
 		{"Timezone from time test #1", t1, "UTC"},
-		{"Timezone from time test #2", t2, "UTC"},
-		{"Timezone from time test #3", t3, "UTC"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
