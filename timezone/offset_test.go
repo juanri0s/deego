@@ -13,18 +13,14 @@ func Test_offset(t *testing.T) {
 		t time.Time
 	}
 
-	t1 := args{date.RandomDate()}
-	t2 := args{date.RandomDate()}
-	t3 := args{date.RandomDate()}
+	t1 := args{date.SampleTime()}
 
 	tests := []struct {
 		name string
 		args args
 		want int
 	}{
-		{"Timezone from time test #1", t1, -14400},
-		{"Timezone from time test #2", t2, -14400},
-		{"Timezone from time test #3", t3, -14400},
+		{"Timezone from time test #1", t1, 0},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
