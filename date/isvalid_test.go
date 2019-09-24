@@ -11,11 +11,11 @@ func Test_isValid(t *testing.T) {
 	type args struct {
 		t time.Time
 	}
-	
+
 	s := "2019-01-22"
 	layout := "0001-01-01 00:00:00 +0000 UTC"
 	t3, _ := time.Parse(layout, s)
-
+	
 	d1 := args{RandomDate()}
 	d2 := args{RandomDate()}
 	d3 := args{t3}
