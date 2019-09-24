@@ -1,10 +1,10 @@
 package timezone
 
 import (
+	"github.com/juanri0s/deego/date"
 	"testing"
 	"time"
 
-	d "../date"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -13,9 +13,9 @@ func Test_timezone(t *testing.T) {
 		t time.Time
 	}
 
-	t1 := args{d.RandomDate()}
-	t2 := args{d.RandomDate()}
-	t3 := args{d.RandomDate()}
+	t1 := args{date.RandomDate()}
+	t2 := args{date.RandomDate()}
+	t3 := args{date.RandomDate()}
 
 	tests := []struct {
 		name string
