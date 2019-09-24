@@ -26,7 +26,7 @@ func diff(t1 time.Time, t2 time.Time) float64 {
 // https://dev.to/samwho/get-the-number-of-days-between-two-dates-in-go-5bf3
 // daysBetween returns the number of days in between two dt
 // https://play.golang.org/p/1bIGdQk25mR
-func daysBetween(t1, t2 time.Time) int {
+func daysBetween(t1, t2 time.Time) float64 {
 	if t1.After(t2) {
 		t1, t2 = t2, t1
 	}
@@ -37,5 +37,5 @@ func daysBetween(t1, t2 time.Time) int {
 	}
 	days += t2.YearDay()
 
-	return days
+	return float64(days)
 }
