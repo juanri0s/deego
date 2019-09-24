@@ -10,7 +10,7 @@ func Test_currTimezone(t *testing.T) {
 		name string
 		want string
 	}{
-		{"current timezone test", "EDT"},
+		{"current timezone test", "UTC"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
