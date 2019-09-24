@@ -10,7 +10,7 @@ func Test_currOffset(t *testing.T) {
 		name string
 		want int
 	}{
-		{"current timezone test", -14400},
+		{"current timezone test", 0},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
